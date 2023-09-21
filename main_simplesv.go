@@ -1,16 +1,19 @@
 package main
 
 import (
-	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
+
+	port := "1323"
+	if len(os.Args) > 1 {
+		port = os.Args[1]
+	}
+
 	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-	e.Static("/static", "static")
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Static("/", "")
+	e.Logger.Fatal(e.Start(":" + port))
 }
